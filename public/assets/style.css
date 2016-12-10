@@ -1,0 +1,44 @@
+body {
+    background-color: #223d75;
+    color: #777777;
+}
+
+a {
+    color: #66afe9;
+}
+
+div.container {
+    margin-top: 10%;
+}
+
+p {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.5em;
+    margin-top: 0.8em;
+}
+
+h1, h6 {
+    font-family: 'Glegoo', serif;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h6 {
+    font-size: 1.7em;
+}
+
+i.fa {
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    div.container {
+        margin-top: 20%;
+    }
+
+    p {
+        margin-top: 1.2em;
+    }
+}
