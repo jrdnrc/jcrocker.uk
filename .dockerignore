@@ -1,2 +1,5 @@
 .idea
+.github
 Dockerfile
+terraform
+task-definition
