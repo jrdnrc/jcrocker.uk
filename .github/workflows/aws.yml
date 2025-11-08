@@ -12,7 +12,7 @@ jobs:
   deploy_website:
     name: Deploy Website to AWS
     runs-on: ubuntu-latest
-    environment: production
+    environment: staging
 
     steps:
     - name: Checkout
@@ -26,6 +26,6 @@ jobs:
 
     - name: Deploy
       run: |
-        aws s3 cp public s3://${{ secrets.BUCKET }}/staging --recursive
-        aws s3 cp public s3://${{ secrets.BUCKET_WWW }}/staging --recursive
+        aws s3 cp public ${{ secrets.DEPLOY_PATH }} --recursive
+        aws s3 cp public ${{ secrets.DEPLOY_PATH_WWW }} --recursive
     
