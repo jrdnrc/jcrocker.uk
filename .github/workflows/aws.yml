@@ -1,7 +1,6 @@
 on:
   push:
-    branches:
-      master
+    branches: [master]
   pull_request:
     types: ['opened', 'synchronize']
 
@@ -14,7 +13,7 @@ jobs:
   deploy_website:
     name: Deploy Website to AWS
     runs-on: ubuntu-latest
-    environment: staging
+    environment: ${{ github.event_name == 'pull_request' && 'staging' || 'production' }}
 
     steps:
     - name: Checkout
