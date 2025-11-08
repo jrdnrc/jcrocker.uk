@@ -3,31 +3,29 @@ on:
     branches:
       master
 
-name: Upload Artifact to S3
+name: Deploy Website to AWS
+
+permissions:
+  id-token: write
 
 jobs:
-  upload_artifact:
-    name: Upload Artifact
+  deploy_website:
+    name: Deploy Website to AWS
     runs-on: ubuntu-latest
     environment: production
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v5
 
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v5
       with:
-        filename: 'jcruk-app-${{ github.sha }}.zip'
-        exclusions: '*.git* /*node_modules/* .editorconfig /*packer/* /*terraform/* task-definition.json'
+        aws-region: ${{ secrets.AWS_REGION }}
+        role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE }}
 
-    - name: Upload file to bucket
-      uses: zdurham/s3-upload-github-action@master
-      env:
-        FILE: './jcruk-app-${{ github.sha }}.zip'
-        AWS_REGION: 'eu-west-1'
-        S3_BUCKET: ${{ secrets.S3_ARTIFACT_BUCKET }}
-        S3_KEY: 'jcruk-app-${{ github.sha }}.zip'
-        AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+    - name: Deploy
+      run: |
+        aws s3 cp public s3://${{ secrets.BUCKET }}/staging --recursive
+        aws s3 cp public s3://${{ secrets.BUCKET_WWW }}/staging --recursive
     
