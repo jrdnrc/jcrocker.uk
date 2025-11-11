@@ -7,7 +7,7 @@ locals {
 }
 
 variable "aws_access_key" {
-  type      = string
+  type = string
 }
 
 variable "aws_secret_key" {
@@ -16,12 +16,12 @@ variable "aws_secret_key" {
 }
 
 variable "aws_account_id" {
-  type      = string
+  type = string
 }
 
 variable "aws_region" {
-  type      = string
-  default   = "eu-west-1"
+  type    = string
+  default = "eu-west-1"
 }
 
 variable "cf_token" {
@@ -30,7 +30,7 @@ variable "cf_token" {
 }
 
 variable "cf_zone_id" {
-  type      = string
+  type = string
 }
 
 variable "gh_token" {

@@ -18,7 +18,7 @@ terraform {
 
   backend "s3" {
     bucket = "jrdn-tf-state"
-    key = "jcrocker.uk/terraform.tfstate"
+    key    = "jcrocker.uk/terraform.tfstate"
     region = "eu-west-1"
   }
 }
@@ -34,26 +34,45 @@ provider "cloudflare" {
   api_token = var.cf_token
 }
 
-resource "cloudflare_dns_record" "records" {
-  for_each = {
-    "jcrocker.uk"     = aws_s3_bucket_website_configuration.jcrocker-uk-files["jcrocker.uk"].website_endpoint,
-    "www.jcrocker.uk" = aws_s3_bucket_website_configuration.jcrocker-uk-files["www.jcrocker.uk"].website_endpoint
-  }
-
+resource "cloudflare_dns_record" "jcrocker_uk" {
   zone_id = var.cf_zone_id
-  name    = each.key
+  name    = "jcrocker.uk"
   type    = "CNAME"
-  content = each.value
+  content = aws_s3_bucket_website_configuration.jcrocker-uk-files["jcrocker.uk"].website_endpoint
   proxied = true
   ttl     = 1
 }
 
-moved {
-  from = aws_s3_bucket_website_configuration.jcrocker-uk-files
-  to   = aws_s3_bucket_website_configuration.jcrocker-uk-files["jcrocker.uk"]
+resource "cloudflare_dns_record" "www_jcrocker_uk" {
+  zone_id = var.cf_zone_id
+  name    = "www.jcrocker.uk"
+  type    = "CNAME"
+  content = cloudflare_dns_record.jcrocker_uk.name
+  proxied = true
+  ttl     = 1
 }
 
-moved {
-  from = aws_s3_bucket_website_configuration.www-jcrocker-uk-files
-  to   = aws_s3_bucket_website_configuration.jcrocker-uk-files["www.jcrocker.uk"]
+resource "cloudflare_ruleset" "redirect_www_to_root" {
+  zone_id = var.cf_zone_id
+  name    = "Redirect www.jcrocker.uk to jcrocker.uk"
+  kind    = "zone"
+  phase   = "http_request_dynamic_redirect"
+
+  rules = [{
+    enabled     = true
+    description = "Redirect all www.jcrocker.uk requests to jcrocker.uk"
+    action      = "redirect"
+
+    expression = "(http.host eq \"www.jcrocker.uk\")"
+
+    action_parameters = {
+      from_value = {
+        status_code = 301
+        target_url = {
+          expression = "concat(\"https://jcrocker.uk\", http.request.uri.path)"
+        }
+        preserve_query_string = true
+      }
+    }
+  }]
 }

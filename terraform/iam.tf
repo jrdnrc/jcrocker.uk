@@ -43,6 +43,11 @@ resource "aws_iam_user_policy_attachment" "jordan_policy_attachment" {
   policy_arn = aws_iam_policy.website_read_write_policy.arn
 }
 
+resource "aws_iam_user_policy_attachment" "jordan_admin_policy_attachment" {
+  user       = data.aws_iam_user.jordan.user_name
+  policy_arn = data.aws_iam_policy.admin_policy.arn
+}
+
 resource "aws_iam_policy" "website_read_write_policy" {
   name        = "jcrocker.uk-website-read-write-policy"
   description = "Permissions to read and write to the website buckets"
@@ -71,4 +76,8 @@ resource "aws_iam_policy" "website_read_write_policy" {
 
 data "aws_iam_user" "jordan" {
   user_name = "jordan"
+}
+
+data "aws_iam_policy" "admin_policy" {
+  name = "AdministratorAccess"
 }
