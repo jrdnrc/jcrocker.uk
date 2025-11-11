@@ -1,45 +1,98 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MM54LDTYXV"></script>
+    <script>
+        const gaId = 'G-MM54LDTYXV';
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-MM54LDTYXV');
+    </script>
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Jordan Crocker - Software Engineer</title>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Glegoo|Source+Sans+Pro">
-    <link rel="stylesheet" type="text/css" href="/assets/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/style.css" />
 
     <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+
 <body>
-<div class="container">
-    <div class="row text-center">
-        <div class="col-md-6 col-md-offset-3 col-xs-12">
-            <img src="/assets/img/profile.png"
-                 width="213"
-                 height="198"
-                 alt="My wife and I"
-                 class="img-circle hidden-xs" />
-            <h1>Jordan Crocker</h1>
-            <h6>Software Engineer <br class="visible-xs" /><span class="hidden-xs">&middot;</span> Bridgend, UK</h6>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-6 col-md-offset-3 col-xs-12">
+                <img src="assets/img/profile.png" width="213" height="198" alt="My wife and I"
+                    class="img-circle hidden-xs" />
+                <h1>Jordan Crocker</h1>
+                <h6>Software Engineer <br class="visible-xs" /><span class="hidden-xs">&middot;</span> Bridgend, UK</h6>
 
-            <p>I love to turn innovative ideas into exciting software.</p>
+                <p>
+                    Accomplished Full Stack & Platform Software Engineer with 15+ years of experience designing scalable
+                    systems in FinTech and SaaS environments.
+                </p>
+                <p>
+                    I specialise in high-performance API design, cloud-native architecture, and leading cross-functional
+                    teams through complex platform transformations.
+                </p>
 
-            <p>I develop scalable domain-driven PHP systems for a wide variety of sectors, including insurance, recruitment and marketing.</p>
+                <p>PHP &middot; Node &middot; React &middot; Rust &middot; Go</p>
+                <p>AWS &middot; Infrastructure &middot; CI/CD &middot; Docker &middot; Serverless</p>
 
-            <p>
-                <a href="//github.com/jrdnrc"><i class="fa fa-github fa-3x"></i></a>
-                &nbsp;
-                <a href="//uk.linkedin.com/in/jordan-crocker"><i class="fa fa-linkedin-square fa-3x"></i></a>
-            </p>
+                <p>
+                    <a href="//github.com/jrdnrc"><i class="fa fa-github fa-3x"></i></a>
+                    &nbsp;
+                    <a href="//uk.linkedin.com/in/jordan-crocker"><i class="fa fa-linkedin-square fa-3x"></i></a>
+                </p>
+            </div>
         </div>
     </div>
-</div>
+    <div class="container"></div>
+    <div id="cookie-banner" class="navbar bg-primary">
+        <div class="container-fluid text-center">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    I collect analytcs data to improve my website.
+                    This data is anonymous and does not contain any personal information.
+                </div>
+            </div>
+            <div class="row">
+                <div id="opt-out" class="col-md-4 col-md-offset-4">
+                    <a href="javascript:optOut()">Opt Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+
+
+function optOut() {
+            document.cookie = "optOut=true; path=/";
+            document.getElementById('opt-out').innerText = `Opted Out.`;
+        }
+
+        const cookieValue = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith("optOut="))
+            ?.split("=")[1];
+
+        if (cookieValue) {
+            window[`ga-disable-${gaId}`] = true;
+            document.getElementById('cookie-banner').classList.add('hidden');
+        }
+</script>
 </html>
